@@ -23,6 +23,20 @@ public class PruebaQytetet {
                 + "cárcel", TipoSorpresa.SALIRCARCEL, 0));
     }
     
+    //Devuelve un ArrayList con objetos Sorpresa:
+    private static ArrayList<Sorpresa> valenMasCero()  {
+        
+        ArrayList<Sorpresa> mascero = new ArrayList();
+        for(Sorpresa sorpresa : mazo) {
+            if (sorpresa.getValor() > 0)
+                mascero.add(sorpresa);
+        }
+        
+        return mascero;
+    }
+    
+    
+    
     //Main:
     public static void main(String[] args) {
         //Inicializamos el mazo y lo mostramos:
@@ -33,6 +47,8 @@ public class PruebaQytetet {
             System.out.println("Sorpresa: " + sorpresa.toString());
         }
         
+        //Mostramos todas las sorpresas con valor mayor que cero:
+        System.out.println("Mayores que cero: " + valenMasCero().toString());
     }
     
 }
