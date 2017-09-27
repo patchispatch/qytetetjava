@@ -67,13 +67,11 @@ public class PruebaQytetet {
         
         //Mostramos todas las sorpresas con valor mayor que cero:
         System.out.println("Mayores que cero: " + valenMasCero().toString());
-        
+
         //Mostramos las sorpresas de tipo IRACASILLA:
         System.out.println("Tipo IRACASILLA: " + irCasilla().toString());
         
         //Mostramos las sorpesas del tipo especificado:
         System.out.println("Tipo" + mostrarCartaTipo(TipoSorpresa.IRACASILLA).toString());
     }
-    
-    
 }
