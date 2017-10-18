@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 package modeloqytetet;
+
 /**
  *
- * @author patchispatch
+ * @author veronica
  */
-public enum TipoSorpresa {
-    IRACASILLA, PAGARCOBRAR, PORCASAHOTEL, PORJUGADOR, SALIRCARCEL
+public enum TipoCasilla {
+    SALIDA,CALLE,SORPRESA,CARCEL,JUEZ,IMPUESTO,PARKING    
 }

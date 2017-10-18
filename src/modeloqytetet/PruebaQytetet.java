@@ -12,15 +12,17 @@ public class PruebaQytetet {
     
     //Atributos de la clase:
     private static ArrayList<Sorpresa> mazo = new ArrayList();
+    private static Tablero tablero = new Tablero();
+    
     
     //Inicializar sorpresa:
     private static void inicializarSorpresa() {
         mazo.add(new Sorpresa("Te hemos pillado con chanclas y calcetines. "
-                + "Lo sentimos, ¡debes ir a la cárcel!", 
-                TipoSorpresa.IRACASILLA, 9));
-                
+                 + "Lo sentimos, ¡debes ir a la cárcel!",
+                TipoSorpresa.IRACASILLA, tablero.getCarcel().getNumeroCasilla()));
+        
         mazo.add(new Sorpresa("un fan anónimo ha pagado tu fianza. Sales de la "
-                + "cárcel", TipoSorpresa.SALIRCARCEL, 0));
+                 + "cárcel", TipoSorpresa.SALIRCARCEL,0));
     }
     
     //Devuelve un ArrayList con objetos Sorpresa:
@@ -55,8 +57,12 @@ public class PruebaQytetet {
         
         return mostrar;
     }
+    
     //Main:
     public static void main(String[] args) {
+        Qytetet qytetet = Qytetet.getInstance();
+        Dado dado = Dado.getInstance();
+        
         //Inicializamos el mazo y lo mostramos:
         inicializarSorpresa();
         
@@ -73,5 +79,19 @@ public class PruebaQytetet {
         
         //Mostramos las sorpesas del tipo especificado:
         System.out.println("Tipo" + mostrarCartaTipo(TipoSorpresa.IRACASILLA).toString());
+        
+        //Mostramos el tablero
+        System.out.println(tablero.toString());
+        
+        //Tiramos el dado y mostramos el valor:
+        System.out.println(dado.tirar());
+        
+        /*
+        Al no estar implementado el inicio de la partida y de los jugadores, 
+        el método toString no funciona.
+        
+        //Mostramos qytetet:
+        System.out.println(qytetet.toString());
+        */
     }
 }
