@@ -22,7 +22,7 @@ public class PruebaQytetet {
                 TipoSorpresa.IRACASILLA, tablero.getCarcel().getNumeroCasilla()));
         
         mazo.add(new Sorpresa("un fan anónimo ha pagado tu fianza. Sales de la "
-                 + "cárcel", TipoSorpresa.SALIRCARCEL,0));
+                + "cárcel", TipoSorpresa.SALIRCARCEL,0));
     }
     
     //Devuelve un ArrayList con objetos Sorpresa:
