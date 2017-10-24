@@ -2,10 +2,6 @@ package modeloqytetet;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author veronica
- */
 public class Tablero {
     private ArrayList<Casilla> casillas = new ArrayList();
     private Casilla carcel;
