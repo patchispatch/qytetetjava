@@ -12,16 +12,19 @@ public class TituloPropiedad {
     private Jugador propietario;
     private Casilla casilla;
 
-    public TituloPropiedad(String nombre, int alquilerBase, double factorRevloracizacion, int hipotecaBase, int precioEdificar) {
+    public TituloPropiedad(String nombre, int alquilerBase, 
+            double factorRevloracizacion, int hipotecaBase, 
+            int precioEdificar, Jugador propietario) {
         this.nombre = nombre;
         this.alquilerBase = alquilerBase;
         this.factorRevloracizacion = factorRevloracizacion;
         this.hipotecaBase = hipotecaBase;
         this.precioEdificar = precioEdificar;
+        this.propietario = propietario;
     }
 
     void cobrarAlquiler (int coste){
-        
+        throw new UnsupportedOperationException("Sin implementar"); 
     }
 
     int getAlquilerBase() {

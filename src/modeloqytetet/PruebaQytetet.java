@@ -4,7 +4,7 @@ package modeloqytetet;
 import java.util.ArrayList;
 
 public class PruebaQytetet {
-    
+/*   
     //Atributos de la clase:
     private static ArrayList<Sorpresa> mazo = new ArrayList();
     private static Tablero tablero = new Tablero();
@@ -52,12 +52,24 @@ public class PruebaQytetet {
         
         return mostrar;
     }
+    */
     
     //Main:
     public static void main(String[] args) {
-        Qytetet qytetet = Qytetet.getInstance();
-        Dado dado = Dado.getInstance();
         
+        Qytetet qytetet = Qytetet.getInstance();
+        
+        //Jugadores (provisional):
+        ArrayList<String> nombres = new ArrayList();
+        
+        nombres.add("MJ");
+        nombres.add("Pepe");
+        nombres.add("Laura");
+        nombres.add("Juan");
+        
+        //Inicializamos el juego:
+        qytetet.inicializarJuego(nombres);
+        /*
         //Inicializamos el mazo y lo mostramos:
         inicializarSorpresa();
         
@@ -75,18 +87,18 @@ public class PruebaQytetet {
         //Mostramos las sorpesas del tipo especificado:
         System.out.println("Tipo" + mostrarCartaTipo(TipoSorpresa.IRACASILLA).toString());
         
+        */
+        
         //Mostramos el tablero
-        System.out.println(tablero.toString());
+        System.out.println("Tablero: \n");
+        qytetet.getTablero();
         
         //Tiramos el dado y mostramos el valor:
-        System.out.println(dado.tirar());
-        
-        /*
-        Al no estar implementado el inicio de la partida y de los jugadores, 
-        el método toString no funciona.
+        System.out.println("Dado: \n");
+        System.out.println(qytetet.getDado().tirar());
         
         //Mostramos qytetet:
         System.out.println(qytetet.toString());
-        */
+        
     }
 }

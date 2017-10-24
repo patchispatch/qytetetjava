@@ -9,18 +9,21 @@ public class Casilla {
     private TipoCasilla tipo;
     private TituloPropiedad titulo;
 
-    Casilla(int numeroCasilla, int coste, TipoCasilla tipo) {
+    public Casilla(int numeroCasilla, int coste, TipoCasilla tipo) {
         this.numeroCasilla = numeroCasilla;
         this.coste = coste;
         this.tipo = tipo;
     }
 
-    Casilla(int numeroCasilla, int coste, TipoCasilla tipo, TituloPropiedad titulo) {
+    public Casilla(int numeroCasilla, int coste, TipoCasilla tipo, TituloPropiedad titulo) {
         this.numeroCasilla = numeroCasilla;
         this.coste = coste;
         this.tipo = tipo;
-        this.setTituloPropiedad(titulo);
+        this.titulo = titulo;
+        titulo.setCasilla(this);
+        
     }
+    
 
     
     public TipoCasilla getTipo() {
@@ -132,14 +135,16 @@ public class Casilla {
     }
     @Override
     public String toString() {
-        String resultado = "Casilla{" + "numeroCasilla=" + numeroCasilla + ", coste=" + coste + ", tipo=" + tipo ;
-    
-        if(!(titulo == null)){
-            resultado += "TituloCasilla=" + titulo + "numHotel=" + numHoteles + "numCasas=" + numCasas+ '}';
-            
+        String resultado = "";
+        
+        if(titulo != null) {
+            resultado = "Número de casilla: " + numeroCasilla + 
+                        "\nTipo de casilla: " + tipo +
+                        "\nCoste: " + coste +
+                        "\nNúmero de casas: " + numCasas + 
+                        "\nNúmero de hoteles: " + numHoteles +
+                        "\nTítulo de propiedad: " + titulo.toString();
         }
-        else
-            resultado += '}';
         
         return resultado;
     }

@@ -23,12 +23,11 @@ public class Qytetet {
     
     //Atributos de referencia:
     private Sorpresa cartaActual=null;
-    private Jugador jugadorActual;
-    private ArrayList<Jugador> jugadores = new ArrayList();
+    private Jugador jugadorActual = null;
+    private ArrayList<Jugador> jugadores;
     private Tablero tablero;
-    private Dado dado;
-    private ArrayList<Sorpresa> mazo = new ArrayList();
-    
+    private Dado dado = Dado.getInstance();
+    private ArrayList<Sorpresa> mazo;
     
     
     public boolean aplicarSorpresa(){
@@ -55,6 +54,23 @@ public class Qytetet {
         return cartaActual;
     }
 
+    public ArrayList<Jugador> getJugadores() {
+        return jugadores;
+    }
+
+    public Tablero getTablero() {
+        return tablero;
+    }
+
+    public Dado getDado() {
+        return dado;
+    }
+
+    public ArrayList<Sorpresa> getMazo() {
+        return mazo;
+    }
+
+    
     public Jugador getJugadorActual() {
         return jugadorActual;
     }
@@ -100,13 +116,15 @@ public class Qytetet {
     }
     //Implementar
     private void inicializarCartasSorpresa(){
+        
+        mazo = new ArrayList();
+        
         mazo.add(new Sorpresa("Te hemos pillado con chanclas y calcetines. "
                  + "Lo sentimos, ¡debes ir a la cárcel!",
                 TipoSorpresa.IRACASILLA, 9));
         mazo.add(new Sorpresa("un fan anónimo ha pagado tu fianza. Sales de la "
                  + "cárcel", TipoSorpresa.SALIRCARCEL, 0));
-        tablero = new Tablero();
-        tablero.getCarcel().getNumeroCasilla();
+ 
     }
     
     private void inicializarJugadores(ArrayList<String> nombres){
@@ -114,10 +132,21 @@ public class Qytetet {
         jugadores = new ArrayList();
         int i = 0;
         
-        while (i < MAX_JUGADORES) {
-            jugadores.add(new Jugador (nombres.get(i)));
+        while (i < nombres.size()) {
+            Jugador jugador = new Jugador (nombres.get(i));
+            
+            jugador.setCasillaActual(tablero.obtenerCasillaNumero(0));
+            
+            jugadores.add(jugador);
+            
             i++;
         }
+    }
+    
+    public void inicializarJuego(ArrayList<String> nombres) {
+        inicializarTablero();
+        inicializarCartasSorpresa();
+        inicializarJugadores(nombres);
     }
     
     private void inicializarTablero(){
@@ -131,25 +160,29 @@ public class Qytetet {
     //ToString:
     @Override
     public String toString(){
-        String cadena = "Tablero: " + tablero.toString() + "\n" 
-                + "Jugador actual:" + jugadorActual.toString() + "\n" 
+        
+        String cadena;
+        
+        cadena = "Tablero: " + tablero.toString() + "\n"  
                 + "Jugadores: ";
                             
         for(Jugador j : jugadores) {
             cadena = cadena + j.toString() + "\n";
         }
         
-        cadena = cadena + "Carta actual: " + cartaActual.toString() + "\n" +
-                 "Mazo: ";
+        if(jugadorActual != null && cartaActual != null) {
+            cadena = cadena + "Jugador actual: " + jugadorActual.toString() +
+                     "\n" + "Carta actual: " + cartaActual.toString() + "\n";
+        }
+        cadena = cadena + "Mazo: ";
         
         for(Sorpresa s : mazo) {
+            
             cadena = cadena + s.toString() + "\n";
         }
         
-        return cadena;
-    }
-                           
-                           
+        return (cadena);
+    }                      
 }
     
     
