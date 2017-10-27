@@ -19,8 +19,7 @@ public class Casilla {
         this.numeroCasilla = numeroCasilla;
         this.coste = coste;
         this.tipo = tipo;
-        this.titulo = titulo;
-        titulo.setCasilla(this);
+        this.asignarTituloPropiedad(titulo);
         
     }
     
@@ -114,10 +113,6 @@ public class Casilla {
         this.numHoteles = numHoteles;
     }
     
-    boolean soyEdificable(){
-        throw new UnsupportedOperationException("Sin implementar");
-    }
-    
     boolean tengoPropietario(){
         throw new UnsupportedOperationException("Sin implementar");
     }
@@ -130,9 +125,22 @@ public class Casilla {
         this.titulo = titulo;
     }
 
-    private void asignarTituloPropiedad(){
-        
+    private void asignarTituloPropiedad(TituloPropiedad titulo){
+        this.setTituloPropiedad(titulo);
+        this.titulo.setCasilla(this);
     }
+    
+    boolean soyEdificable() {
+        
+        boolean edificable = false;
+        
+        if(tipo == TipoCasilla.CALLE)
+            edificable = true;
+                    
+        return edificable;
+    }
+ 
+    
     @Override
     public String toString() {
         String resultado = "";

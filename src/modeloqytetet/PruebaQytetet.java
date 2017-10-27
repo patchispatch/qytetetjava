@@ -57,18 +57,6 @@ public class PruebaQytetet {
     //Main:
     public static void main(String[] args) {
         
-        Qytetet qytetet = Qytetet.getInstance();
-        
-        //Jugadores (provisional):
-        ArrayList<String> nombres = new ArrayList();
-        
-        nombres.add("MJ");
-        nombres.add("Pepe");
-        nombres.add("Laura");
-        nombres.add("Juan");
-        
-        //Inicializamos el juego:
-        qytetet.inicializarJuego(nombres);
         /*
         //Inicializamos el mazo y lo mostramos:
         inicializarSorpresa();
@@ -88,6 +76,21 @@ public class PruebaQytetet {
         System.out.println("Tipo" + mostrarCartaTipo(TipoSorpresa.IRACASILLA).toString());
         
         */
+        
+        
+        Qytetet qytetet = Qytetet.getInstance();
+        
+        //Jugadores (provisional):
+        ArrayList<String> nombres = new ArrayList();
+        
+        nombres.add("MJ");
+        nombres.add("Pepe");
+        nombres.add("Laura");
+        nombres.add("Juan");
+        
+        //Inicializamos el juego:
+        qytetet.inicializarJuego(nombres);
+        
         
         //Mostramos el tablero
         System.out.println("Tablero: \n");

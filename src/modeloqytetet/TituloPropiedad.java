@@ -70,6 +70,18 @@ public class TituloPropiedad {
         throw new UnsupportedOperationException("Sin implementar");
     }
     
+    int calcularValor() {
+        int valor;
+        
+        //Valor inicial de casilla:
+        valor = casilla.precioTotalComprar();
+        
+        if (hipotecada)
+            valor -= hipotecaBase;
+        
+        return valor;
+    }
+    
     @Override
     public String toString() {
         return "TituloPropiedad{" + "nombre=" + nombre + ", hipotecada=" 
