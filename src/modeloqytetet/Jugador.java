@@ -7,7 +7,7 @@ class Jugador {
     private String nombre;
     private int saldo=7500;
     
-    private Sorpresa cartaLibertad=null;
+    private Sorpresa cartaLibertad = null;
     private Casilla casillaActual=null;
     private ArrayList<TituloPropiedad> propiedades = new ArrayList();
     
@@ -25,7 +25,15 @@ class Jugador {
     }
     
     public boolean tengoPropiedades(){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean resultado;
+        
+        if(propiedades.size() > 0)
+            resultado = true;
+        
+        else
+            resultado = false;
+        
+        return resultado;
     }
     
     boolean actualizarPosicion(Casilla casilla){
@@ -45,19 +53,44 @@ class Jugador {
     }
     
     void modificarSaldo (int cantidad){
-        
+        saldo += cantidad;
     }
 
     int obtenerCapital(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int capital = 0;
+        ArrayList<Casilla> casillas = new ArrayList();
+        
+        for(TituloPropiedad t : propiedades) {
+            casillas.add(t.getCasilla());
+        }
+        
+        for(Casilla c : casillas) {
+            int v_propiedad = 0;
+            
+            v_propiedad += c.getCoste() + ((c.getNumCasas() + c.getNumHoteles())
+                        * c.getPrecioEdificar());
+            
+            capital += v_propiedad;
+        }
+        
+        return capital;
     }
     
-    TituloPropiedad obtenerPropiedadesHipotecadas(boolean hipotecada){
-        throw new UnsupportedOperationException("Sin implementar");
+    ArrayList<TituloPropiedad> obtenerPropiedadesHipotecadas(boolean hipotecada){
+        
+        ArrayList<TituloPropiedad> resultado = new ArrayList();
+        
+        for(TituloPropiedad t : propiedades) {
+            if(t.getHipotecada() == hipotecada) {
+                resultado.add(t);
+            }
+        }
+        
+        return resultado;
     }
     
     void pagarCobrarPorCasaYHotel(int cantidad){
-        
+        throw new UnsupportedOperationException("Sin implementar");
     }
     
     boolean pagarLibertad(int cantidad){
@@ -77,7 +110,14 @@ class Jugador {
     }
     
     boolean puedoVenderPropiedad(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean resultado = false;
+        
+        if(this.esDeMiPropiedad(casilla)) {
+            if(!casilla.estaHipotecada())
+                resultado = true;
+        }
+        
+        return resultado;
     }
 
     void setCartaLibertad(Sorpresa cartaLibertad) {
@@ -93,7 +133,13 @@ class Jugador {
     }
     
     boolean tengoCartaLibertad(){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean resultado = false;
+        
+        if(cartaLibertad != null)
+            resultado = true;
+        
+        return resultado;
     }
     
     void venderPropiedad(Casilla casilla){
@@ -101,19 +147,36 @@ class Jugador {
     }
     
     private int cuantasCasasHotelesTengo(){
-        throw new UnsupportedOperationException("Sin implementar");
+        return propiedades.size();
     }
     
     private void eliminarDeMisPropiedades(Casilla casilla){
-        
+        for (TituloPropiedad t : propiedades) {
+            if(t == casilla.getTitulo())
+                propiedades.remove(t);
+        }
     }
     
     private boolean esDeMiPropiedad(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean resultado = false;
+        
+        for(TituloPropiedad t : propiedades){
+            if(t == casilla.getTitulo())
+                resultado = true;
+        }
+        
+        return resultado;
     }
     
     private boolean tengoSaldo(int cantidad){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean resultado;
+        
+        if(saldo >= cantidad)
+            resultado = true;
+        else
+            resultado = false;
+        
+        return resultado;
     }
     
     @Override

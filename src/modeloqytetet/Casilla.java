@@ -58,7 +58,7 @@ public class Casilla {
     }
     
     boolean estaHipotecada(){
-        throw new UnsupportedOperationException("Sin implementar");
+        return titulo.getHipotecada();
     }
     
     int getCoste() {
@@ -82,7 +82,7 @@ public class Casilla {
     }
     
     int getPrecioEdificar(){
-        throw new UnsupportedOperationException("Sin implementar");
+        return titulo.getPrecioEdificar();
     }
     
     int hipotecar(){

@@ -18,6 +18,6 @@ public class Dado {
         int aleatorio;
         aleatorio = (int) (Math.random()*6+1);
         
-        return(aleatorio);
+        return aleatorio;
     }
 }

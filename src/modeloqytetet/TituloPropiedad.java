@@ -30,7 +30,11 @@ public class TituloPropiedad {
     int getAlquilerBase() {
         return alquilerBase;
     }
-
+        
+    Casilla getCasilla() {
+        return casilla;
+    }
+    
     double getFactorRevloracizacion() {
         return factorRevloracizacion;
     }
@@ -39,7 +43,7 @@ public class TituloPropiedad {
         return hipotecaBase;
     }
 
-    boolean isHipotecada() {
+    boolean getHipotecada() {
         return hipotecada;
     }
     
@@ -67,7 +71,13 @@ public class TituloPropiedad {
     }
     
     boolean tengoPropietario(){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean resultado;
+        if(propietario != null)
+            resultado = true;
+        else
+            resultado = false;
+        
+        return resultado;
     }
     
     int calcularValor() {
