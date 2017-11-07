@@ -58,20 +58,19 @@ class Jugador {
 
     int obtenerCapital(){
         int capital = 0;
-        ArrayList<Casilla> casillas = new ArrayList();
         
         for(TituloPropiedad t : propiedades) {
-            casillas.add(t.getCasilla());
+            int v_prop = 0;
+            
+            v_prop += t.getCasilla().getCoste() + (this.cuantasCasasHotelesTengo()
+                    * t.getPrecioEdificar());
+            
+            if(t.getHipotecada())
+                v_prop -= t.getHipotecaBase();
+            
+            capital += v_prop;
         }
         
-        for(Casilla c : casillas) {
-            int v_propiedad = 0;
-            
-            v_propiedad += c.getCoste() + ((c.getNumCasas() + c.getNumHoteles())
-                        * c.getPrecioEdificar());
-            
-            capital += v_propiedad;
-        }
         
         return capital;
     }
@@ -147,7 +146,13 @@ class Jugador {
     }
     
     private int cuantasCasasHotelesTengo(){
-        return propiedades.size();
+        int prop = 0;
+        
+        for(TituloPropiedad t : propiedades) {
+            prop += t.getCasilla().getNumCasas() + t.getCasilla().getNumHoteles();
+        }
+        
+        return prop;
     }
     
     private void eliminarDeMisPropiedades(Casilla casilla){
