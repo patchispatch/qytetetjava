@@ -3,6 +3,7 @@ package modeloqytetet;
 import java.util.List;
 //import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Qytetet {
     //Las constantes en java son "final"
@@ -31,23 +32,85 @@ public class Qytetet {
     
     
     public boolean aplicarSorpresa(){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean tienePropietario=false;
+        if (cartaActual.getTipo() == TipoSorpresa.PAGARCOBRAR){
+            jugadorActual.modificarSaldo(cartaActual.getValor());
+        }
+        else if (cartaActual.getTipo() == TipoSorpresa.IRACASILLA){
+            int numeroCasilla = cartaActual.getValor();
+           boolean esCarcel = tablero.esCasillaCarcel(numeroCasilla);
+           if(esCarcel){
+               encarcelarJugador();
+           }
+           else{
+               Casilla nuevaCasilla = tablero.obtenerCasillaNumero(numeroCasilla);
+               jugadorActual.actualizarPosicion(nuevaCasilla);
+           }
+        }
+        else if (cartaActual.getTipo() == TipoSorpresa.PORCASAHOTEL){
+            int cantidad = cartaActual.getValor();
+            jugadorActual.pagarCobrarPorCasaYHotel(cantidad);
+        }
+        else if (cartaActual.getTipo() == TipoSorpresa.PORJUGADOR){
+            for(int i= 0; i <= (MAX_JUGADORES-1); ++i){
+             //NO sé implementar el siguiente ni la condición de dentro del if
+             /*if(jugador<>jugadorActual){
+                int cantidad = cartaActual.getValor();
+                jugador.modificarSaldo(cantidad);
+                jugadorActual.modificarSaldo(-cantidad);
+             }
+             */
+            }
+        }
+        if(cartaActual.getTipo() == TipoSorpresa.SALIRCARCEL){
+            jugadorActual.setCartaLibertad(cartaActual);
+            mazo.add(cartaActual);
+        }
+        return tienePropietario;
     }
     
     public boolean cancelarHipoteca(Casilla casilla){
         throw new UnsupportedOperationException("Sin implementar");
     }
     
-    public boolean comprarTituloPropiedad(){
-        throw new UnsupportedOperationException("Sin implementar");
+    public boolean comprarTituloPropiedad(){  
+        return jugadorActual.comprarTitulo();
+    }
+
+    public static int getSALDO_SALIDA() {
+        return SALDO_SALIDA;
     }
     
     public boolean edificarCasa(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean puedoEdificar = false;
+        if(casilla.soyEdificable()){
+            boolean sePuedeEdificar = casilla.sePuedeEdificarCasa();
+            if(sePuedeEdificar){
+                puedoEdificar = jugadorActual.puedoEdificarCasa(casilla);
+                if(puedoEdificar){
+                    int costeEdificarCasa = casilla.edificarCasa();
+                    jugadorActual.modificarSaldo(-costeEdificarCasa);
+                }
+            }
+            
+        }
+        return puedoEdificar;
     }
     
     public boolean edificarHotel(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean puedoEdificar = false;
+        if(casilla.soyEdificable()){
+            boolean sePuedeEdificar = casilla.sePuedeEdificarHotel();
+            if(sePuedeEdificar){
+                puedoEdificar = jugadorActual.puedoEdificarHotel(casilla);
+                if(puedoEdificar){
+                    int costeEdificarHotel = casilla.edificarHotel();
+                    jugadorActual.modificarSaldo(-costeEdificarHotel);
+                }
+            }
+            
+        }
+        return puedoEdificar;
     }
     
     public Sorpresa getCartaActual() {
@@ -76,28 +139,74 @@ public class Qytetet {
     }
     
     public boolean hipotecarPropiedad(Casilla casilla){
+        if(casilla.soyEdificable()){
+            boolean sePuedeHipotecar = !casilla.estaHipotecada();
+            if(sePuedeHipotecar){
+                boolean puedoHipotecar = jugadorActual.puedoHipotecar(casilla);
+                if(puedoHipotecar){
+                    int cantidadRecibida = casilla.hipotecar();
+                    jugadorActual.modificarSaldo(cantidadRecibida);
+                }
+            }
+        }
+       
         throw new UnsupportedOperationException("Sin implementar");
-    }
-    
-    public void inicializarJuego(String nombres){
-        
     }
     
     public boolean intentarSalirCarcel(MetodoSalirCarcel metodo){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean libre = false;
+       
+       if (metodo == MetodoSalirCarcel.TIRANDODADO){
+           int valor = dado.tirar();
+           if (valor > 5){
+               libre = true;
+           }
+       }
+       else if (metodo == MetodoSalirCarcel.PAGANDOLIBERTAD){
+             boolean tengoSaldo = jugadorActual.pagarLibertad(-PRECIO_LIBERTAD);
+             libre = true;
+        
+       }
+       if(libre){
+           jugadorActual.setEncarcelado(false);
+       }
+       return libre;
     }
     
     public boolean jugar(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int valorDado = dado.tirar();
+        Casilla casillaPosicion = jugadorActual.getCasillaActual();
+        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, valorDado);
+        boolean tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);
+    
+        if(!nuevaCasilla.soyEdificable()){
+            if(nuevaCasilla.getTipo()==TipoCasilla.JUEZ){
+                encarcelarJugador();
+            }
+            else if(nuevaCasilla.getTipo()==TipoCasilla.SORPRESA){
+                cartaActual = mazo.get(0);
+            }
+        }
+        return tienePropietario;
     }
     
     public List obtenerRanking(){
-        throw new UnsupportedOperationException("Sin implementar");
+        ArrayList<List> ranking = new ArrayList();
+        for(int i = 1; i<= getJugadores().size(); ++i){
+            Jugador jugador = getJugadores().get(i-1);
+            int capital = jugador.obtenerCapital();
+            List incluir = new ArrayList();
+            incluir.add(jugador.getNombre());
+            incluir.add(capital);
+            ranking.add(incluir);
+        }
+        
+        return ranking;
     }
     
     public ArrayList<Casilla> propiedadesHipotecadasJugador(boolean hipotecadas){
         
-        ArrayList<TituloPropiedad> titulos = new ArrayList();
+        ArrayList<TituloPropiedad> titulos;
         ArrayList<Casilla> casillas = new ArrayList();
         
         titulos = jugadorActual.obtenerPropiedadesHipotecadas(hipotecadas);
@@ -130,10 +239,25 @@ public class Qytetet {
     }
     
     public boolean venderPropiedad(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+       boolean puedoVender = false;
+        if (casilla.soyEdificable()){
+           puedoVender = jugadorActual.puedoVenderPropiedad(casilla);
+           if(puedoVender){
+               jugadorActual.venderPropiedad(casilla);
+           }
+        }
+        return(puedoVender);
     }
     
     private void encarcelarJugador(){
+        if(! jugadorActual.tengoCartaLibertad()){
+            Casilla casilla = tablero.getCarcel();
+            jugadorActual.irACarcel(casilla);
+        }
+        else{
+            Sorpresa carta = jugadorActual.devolverCartaLibertad();
+            mazo.add(carta);
+        }
         
     }
     
@@ -203,7 +327,8 @@ public class Qytetet {
                 + "A los guardias les ha gustado, ¡y te dejan salir!",
                 TipoSorpresa.SALIRCARCEL, 0));
         
-        
+        //Barajamos las cartas
+        Collections.shuffle(mazo);
     }
     
       private void inicializarJugadores(ArrayList<String> nombres){
@@ -223,9 +348,11 @@ public class Qytetet {
     }
     
     public void inicializarJuego(ArrayList<String> nombres) {
-        inicializarTablero();
-        inicializarCartasSorpresa();
-        inicializarJugadores(nombres);
+        this.inicializarJugadores(nombres);
+        this.inicializarTablero();
+        this.inicializarCartasSorpresa();
+        this.salidaJugadores();
+        
     }
     
     private void inicializarTablero(){
@@ -237,6 +364,10 @@ public class Qytetet {
         for (Jugador j : jugadores) {
             j.setCasillaActual(tablero.obtenerCasillaNumero(0));
         }
+        int aleatorio;
+        aleatorio = (int) (Math.random()*jugadores.size());
+        
+        jugadorActual = jugadores.get(aleatorio);
     }
     
     //ToString:

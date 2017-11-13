@@ -34,11 +34,14 @@ public class Casilla {
     }
     
     TituloPropiedad asignarPropietario(Jugador jugador){
-        throw new UnsupportedOperationException("Sin implementar");
+        titulo.setPropietario(jugador);
+        return (titulo);
     }
     
     int calcularValorHipoteca(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int cantidadRecibida = titulo.getHipotecaBase() + 
+                (int)(numCasas*0.5*titulo.getHipotecaBase() + numHoteles * titulo.getHipotecaBase());
+        return cantidadRecibida;
     }
     
     int cancelarHipoteca(){
@@ -46,15 +49,23 @@ public class Casilla {
     }
     
     int cobrarAlquiler(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int alquilerBase = titulo.getAlquilerBase();
+        int costeAlquiler = alquilerBase + (int)(numCasas * 0.5 + numHoteles * 2);
+        titulo.propietario.modificarSaldo(costeAlquiler);
+        
+        return costeAlquiler;
     }
     
     int edificarCasa(){
-        throw new UnsupportedOperationException("Sin implementar");
+        setNumCasas(numCasas+1);
+        int costeEdificarCasa = titulo.getPrecioEdificar();
+        return costeEdificarCasa;
     }
     
     int edificarHotel(){
-        throw new UnsupportedOperationException("Sin implementar");
+        setNumHoteles(numHoteles+1);
+        int costeEdificarHotel = titulo.getPrecioEdificar();
+        return costeEdificarHotel;
     }
     
     boolean estaHipotecada(){
@@ -86,11 +97,15 @@ public class Casilla {
     }
     
     int hipotecar(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int cantidadRecibida = calcularValorHipoteca();
+        titulo.setHipotecada(true);
+        return cantidadRecibida;
+        
     }
     
     int precioTotalComprar(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int precioCompra = coste + (numCasas + numHoteles) * titulo.getPrecioEdificar();
+        return precioCompra;
     }
     
     boolean propietarioEncarcelado(){
@@ -98,11 +113,18 @@ public class Casilla {
     }
     
     boolean sePuedeEdificarCasa(){
-        throw new UnsupportedOperationException("Sin implementar");
+        if(numCasas < 4)
+            return true;
+        else
+            return false;
     }
     
     boolean sePuedeEdificarHotel(){
-        throw new UnsupportedOperationException("Sin implementar");
+        if( numCasas == 4  && numHoteles < 4){
+            return true;
+        }
+        else 
+            return false;
     }
     
     void setNumCasas(int numCasas) {
@@ -114,11 +136,15 @@ public class Casilla {
     }
     
     boolean tengoPropietario(){
-        throw new UnsupportedOperationException("Sin implementar");
+        return titulo.tengoPropietario();
     }
     
     int venderTitulo(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int precioVenta = precioTotalComprar() + (int)titulo.getFactorRevloracizacion()*precioTotalComprar();
+        titulo.setPropietario(null);
+        setNumHoteles(0);
+        setNumCasas(0);
+        return precioVenta;
     }
     
     private void setTituloPropiedad(TituloPropiedad titulo) {

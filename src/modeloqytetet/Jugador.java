@@ -6,7 +6,7 @@ class Jugador {
     private boolean encarcelado=false;
     private String nombre;
     private int saldo=7500;
-    
+
     private Sorpresa cartaLibertad = null;
     private Casilla casillaActual=null;
     private ArrayList<TituloPropiedad> propiedades = new ArrayList();
@@ -15,7 +15,11 @@ class Jugador {
     public Jugador(String nombre){
         this.nombre = nombre;
     }
-
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
     public Casilla getCasillaActual() {
         return casillaActual;
     }
@@ -37,11 +41,41 @@ class Jugador {
     }
     
     boolean actualizarPosicion(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        if (casilla.getNumeroCasilla()< casillaActual.getNumeroCasilla()){
+            modificarSaldo(Qytetet.getSALDO_SALIDA());
+        }
+        boolean tienePropietario = false;
+        setCasillaActual(casilla);
+        if (casilla.soyEdificable()){
+            if (casilla.tengoPropietario()){
+                tienePropietario =  true;
+                if(!encarcelado){
+                    int costeAlquiler = casilla.cobrarAlquiler();
+                    modificarSaldo(-costeAlquiler);
+                }
+            
+            }
+        }
+        else if (casilla.getTipo() == TipoCasilla.IMPUESTO){
+                int coste = casilla.getCoste();
+                modificarSaldo(-coste);
+        }
+                    
+        return tienePropietario;        
     }
     
     boolean comprarTitulo(){
-        throw new UnsupportedOperationException("Sin implementar");
+ 
+        boolean puedoComprar = false;
+        if(casillaActual.soyEdificable() && !casillaActual.tengoPropietario()
+                && (casillaActual.getCoste() <= saldo)){
+            int costeCompra = casillaActual.getCoste();
+            TituloPropiedad titulo = casillaActual.asignarPropietario(this);
+            propiedades.add(titulo);
+            modificarSaldo(-costeCompra);
+            puedoComprar=true;
+        }
+        return puedoComprar;
     }
     
     Sorpresa devolverCartaLibertad(){
@@ -49,7 +83,8 @@ class Jugador {
     }
     
     void irACarcel(Casilla casilla){
-        
+        setCasillaActual(casilla);
+        setEncarcelado(true);        
     }
     
     void modificarSaldo (int cantidad){
@@ -89,21 +124,42 @@ class Jugador {
     }
     
     void pagarCobrarPorCasaYHotel(int cantidad){
-        throw new UnsupportedOperationException("Sin implementar");
+        int numeroTotal = cuantasCasasHotelesTengo();
+        modificarSaldo(numeroTotal*cantidad);
     }
     
     boolean pagarLibertad(int cantidad){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean puedoPagar = false;
+        if (tengoSaldo(cantidad)){
+            modificarSaldo(cantidad);
+            puedoPagar = true;
+        }
+        return puedoPagar;
     }
     
     boolean puedoEdificarCasa(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean esMia = esDeMiPropiedad(casilla);
+        if(esMia){
+            int costeEdificarCasa = casilla.getPrecioEdificar();
+            boolean tengoSaldo = tengoSaldo(costeEdificarCasa);
+            return tengoSaldo;
+        }
+        return esMia;
     }
     
     boolean puedoEdificarHotel(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean esMia = esDeMiPropiedad(casilla);
+        if(esMia){
+            int costeEdificarHotel = casilla.getPrecioEdificar();
+            boolean tengoSaldo = tengoSaldo(costeEdificarHotel);
+            return tengoSaldo;
+        }
+        return esMia;
     }
-    
+    boolean puedoHipotecar(Casilla casilla){
+        boolean esMia = esDeMiPropiedad(casilla);
+        return esMia;
+    }
     boolean puedoPagarHipoteca(Casilla casilla){
         throw new UnsupportedOperationException("Sin implementar");
     }
@@ -142,7 +198,9 @@ class Jugador {
     }
     
     void venderPropiedad(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        int precioVenta = casilla.venderTitulo();
+        modificarSaldo(precioVenta);
+        eliminarDeMisPropiedades(casilla);
     }
     
     private int cuantasCasasHotelesTengo(){

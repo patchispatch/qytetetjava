@@ -9,7 +9,7 @@ public class TituloPropiedad {
     private int hipotecaBase;
     private int precioEdificar;
     //Atributos de referencia
-    private Jugador propietario;
+    public Jugador propietario;
     private Casilla casilla;
 
     public TituloPropiedad(String nombre, int alquilerBase, 
