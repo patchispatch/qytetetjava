@@ -52,14 +52,14 @@ public class Qytetet {
             jugadorActual.pagarCobrarPorCasaYHotel(cantidad);
         }
         else if (cartaActual.getTipo() == TipoSorpresa.PORJUGADOR){
-            for(int i= 0; i <= (MAX_JUGADORES-1); ++i){
-             //NO sé implementar el siguiente ni la condición de dentro del if
-             /*if(jugador<>jugadorActual){
-                int cantidad = cartaActual.getValor();
-                jugador.modificarSaldo(cantidad);
-                jugadorActual.modificarSaldo(-cantidad);
-             }
-             */
+            for(Jugador jugador : jugadores){
+                siguienteJugador();
+                if(jugador != jugadorActual){
+                    jugador.modificarSaldo(cartaActual.getValor());
+                    jugadorActual.modificarSaldo(-cartaActual.getValor());
+                }
+                
+            
             }
         }
         if(cartaActual.getTipo() == TipoSorpresa.SALIRCARCEL){
