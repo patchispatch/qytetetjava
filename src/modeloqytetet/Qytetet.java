@@ -4,6 +4,8 @@ import java.util.List;
 //import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Qytetet {
     //Las constantes en java son "final"
@@ -190,15 +192,14 @@ public class Qytetet {
         return tienePropietario;
     }
     
-    public List obtenerRanking(){
-        ArrayList<List> ranking = new ArrayList();
-        for(int i = 1; i<= getJugadores().size(); ++i){
-            Jugador jugador = getJugadores().get(i-1);
+    public Map<String, Integer> obtenerRanking(){
+        
+        Map<String, Integer> ranking = new HashMap();
+        
+        for(Jugador jugador : jugadores) {
+            
             int capital = jugador.obtenerCapital();
-            List incluir = new ArrayList();
-            incluir.add(jugador.getNombre());
-            incluir.add(capital);
-            ranking.add(incluir);
+            ranking.put(jugador.getNombre(), capital);
         }
         
         return ranking;
