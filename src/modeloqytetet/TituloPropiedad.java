@@ -5,7 +5,7 @@ public class TituloPropiedad {
     private String nombre;
     private boolean hipotecada = false;
     private int alquilerBase;
-    private double factorRevloracizacion;
+    private double factorRevalorizacion;
     private int hipotecaBase;
     private int precioEdificar;
     //Atributos de referencia
@@ -13,11 +13,11 @@ public class TituloPropiedad {
     private Casilla casilla;
 
     public TituloPropiedad(String nombre, int alquilerBase, 
-            double factorRevloracizacion, int hipotecaBase, 
+            double factorRevalorizacion, int hipotecaBase, 
             int precioEdificar, Jugador propietario) {
         this.nombre = nombre;
         this.alquilerBase = alquilerBase;
-        this.factorRevloracizacion = factorRevloracizacion;
+        this.factorRevalorizacion = factorRevalorizacion;
         this.hipotecaBase = hipotecaBase;
         this.precioEdificar = precioEdificar;
         this.propietario = propietario;
@@ -35,8 +35,8 @@ public class TituloPropiedad {
         return casilla;
     }
     
-    double getFactorRevloracizacion() {
-        return factorRevloracizacion;
+    double getFactorRevalorizacion() {
+        return factorRevalorizacion;
     }
 
     int getHipotecaBase() {
@@ -84,7 +84,7 @@ public class TituloPropiedad {
     public String toString() {
         return "TituloPropiedad{" + "nombre=" + nombre + ", hipotecada=" 
                 + hipotecada + ", alquilerBase=" + alquilerBase 
-                + ", factorRevloracizacion=" + factorRevloracizacion 
+                + ", factorRevalorizacion=" + factorRevalorizacion 
                 + ", hipotecaBase=" + hipotecaBase + ", precioEdificar=" 
                 + precioEdificar + '}';
     }

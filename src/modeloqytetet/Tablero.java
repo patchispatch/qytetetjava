@@ -65,27 +65,27 @@ public class Tablero {
     private void Inicializar(){
         
         casillas = new ArrayList();
-        
+       
         casillas.add(new Casilla(0,0,TipoCasilla.SALIDA));
-        casillas.add(new Casilla(1,500,TipoCasilla.CALLE,new TituloPropiedad("Troupe de los Edena Ruh",1, (float) 0.65,2,3, null)));
-        casillas.add(new Casilla(2,200,TipoCasilla.CALLE,new TituloPropiedad("Tarbean",1, (float) 0.75,2,3, null)));
+        casillas.add(new Casilla(1,500,TipoCasilla.CALLE,new TituloPropiedad("Troupe de los Edena Ruh",150, (float) 0.65,280,250, null)));
+        casillas.add(new Casilla(2,200,TipoCasilla.CALLE,new TituloPropiedad("Tarbean",100, (float) 0.75,125,75, null)));
         casillas.add(new Casilla(3,0,TipoCasilla.SORPRESA));
-        casillas.add(new Casilla(4,350, TipoCasilla.CALLE,new TituloPropiedad("El Eolio",1, (float) 0.7,2,3, null)));
+        casillas.add(new Casilla(4,350, TipoCasilla.CALLE,new TituloPropiedad("El Eolio",150, (float) 0.7,185,175, null)));
         casillas.add(new Casilla(5,0,TipoCasilla.CARCEL));
-        casillas.add(new Casilla(6,400, TipoCasilla.CALLE,new TituloPropiedad("Anker's",1,(float) 0.2,2,3, null)));
-        casillas.add(new Casilla(7,425,TipoCasilla.CALLE,new TituloPropiedad("El Archivo",1, (float) 0.2,2,3, null)));
+        casillas.add(new Casilla(6,400, TipoCasilla.CALLE,new TituloPropiedad("Anker's",180,(float) 0.8,240,200, null)));
+        casillas.add(new Casilla(7,425,TipoCasilla.CALLE,new TituloPropiedad("El Archivo",195, (float) 0.7,220,210, null)));
         casillas.add(new Casilla(8,0,TipoCasilla.IMPUESTO));
-        casillas.add(new Casilla(9,300, TipoCasilla.CALLE,new TituloPropiedad("La Clínica",1, (float) 0.2,2,3, null)));
+        casillas.add(new Casilla(9,300, TipoCasilla.CALLE,new TituloPropiedad("La Clínica",100, (float) 0.65,120,110, null)));
         casillas.add(new Casilla(10,0,TipoCasilla.PARKING));
-        casillas.add(new Casilla(11,650,TipoCasilla.CALLE,new TituloPropiedad("La Factoría",1, (float) 0.2,2,3, null)));
-        casillas.add(new Casilla(12,540, TipoCasilla.CALLE,new TituloPropiedad("La Subrealidad",1, (float) 0.2,2,3, null)));
+        casillas.add(new Casilla(11,650,TipoCasilla.CALLE,new TituloPropiedad("La Factoría",200, (float) 0.9,320,280, null)));
+        casillas.add(new Casilla(12,540, TipoCasilla.CALLE,new TituloPropiedad("La Subrealidad",180, (float) 0.75,240,210, null)));
         casillas.add(new Casilla(13,0, TipoCasilla.SORPRESA));
-        casillas.add(new Casilla(14,700, TipoCasilla.CALLE,new TituloPropiedad("Ademre",1, (float) 0.2,2,3, null)));
+        casillas.add(new Casilla(14,700, TipoCasilla.CALLE,new TituloPropiedad("Ademre",300, (float) 0.8,350,310, null)));
         casillas.add(new Casilla(15,0,TipoCasilla.JUEZ));
-        casillas.add(new Casilla(16,250, TipoCasilla.CALLE,new TituloPropiedad("Modeg",1, (float) 0.2,2,3,null)));
-        casillas.add(new Casilla(17,725, TipoCasilla.CALLE, new TituloPropiedad("Trebon",1, (float) 0.2,2,3, null)));
+        casillas.add(new Casilla(16,250, TipoCasilla.CALLE,new TituloPropiedad("Modeg",120, (float) 0.65,170,150,null)));
+        casillas.add(new Casilla(17,725, TipoCasilla.CALLE, new TituloPropiedad("Trebon",300, (float) 0.9,320,310, null)));
         casillas.add(new Casilla(18,0, TipoCasilla.SORPRESA));
-        casillas.add(new Casilla(19,800, TipoCasilla.CALLE, new TituloPropiedad("El mundo de los Fata",1, (float) 0.2,2,3, null)));
+        casillas.add(new Casilla(19,800, TipoCasilla.CALLE, new TituloPropiedad("El mundo de los Fata",380, (float) 0.8,420,400, null)));
         
         carcel = casillas.get(5);
           

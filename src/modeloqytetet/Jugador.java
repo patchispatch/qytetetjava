@@ -79,7 +79,9 @@ class Jugador {
     }
     
     Sorpresa devolverCartaLibertad(){
-        throw new UnsupportedOperationException("Sin implementar");
+        Sorpresa carta = cartaLibertad;
+        cartaLibertad = null;
+        return carta;
     }
     
     void irACarcel(Casilla casilla){

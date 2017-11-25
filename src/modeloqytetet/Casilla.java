@@ -140,7 +140,7 @@ public class Casilla {
     }
     
     int venderTitulo(){
-        int precioVenta = precioTotalComprar() + (int)titulo.getFactorRevloracizacion()*precioTotalComprar();
+        int precioVenta = precioTotalComprar() + (int)titulo.getFactorRevalorizacion()*precioTotalComprar();
         titulo.setPropietario(null);
         setNumHoteles(0);
         setNumCasas(0);
