@@ -80,7 +80,7 @@ public class Casilla {
         throw new UnsupportedOperationException("Sin implementar");
     }
     
-    int getNumeroCasilla() {
+    public int getNumeroCasilla() {
         return numeroCasilla;
     }
   

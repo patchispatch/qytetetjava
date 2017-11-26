@@ -31,7 +31,7 @@ public class Tablero {
         return carcel;
     }
     
-    Casilla obtenerCasillaNumero (int numeroCasilla){
+    public Casilla obtenerCasillaNumero (int numeroCasilla){
         boolean encontrado = false;
         Casilla devolver = null;
         
@@ -74,7 +74,7 @@ public class Tablero {
         casillas.add(new Casilla(5,0,TipoCasilla.CARCEL));
         casillas.add(new Casilla(6,400, TipoCasilla.CALLE,new TituloPropiedad("Anker's",180,(float) 0.8,240,200, null)));
         casillas.add(new Casilla(7,425,TipoCasilla.CALLE,new TituloPropiedad("El Archivo",195, (float) 0.7,220,210, null)));
-        casillas.add(new Casilla(8,0,TipoCasilla.IMPUESTO));
+        casillas.add(new Casilla(8,500,TipoCasilla.IMPUESTO));
         casillas.add(new Casilla(9,300, TipoCasilla.CALLE,new TituloPropiedad("La Clínica",100, (float) 0.65,120,110, null)));
         casillas.add(new Casilla(10,0,TipoCasilla.PARKING));
         casillas.add(new Casilla(11,650,TipoCasilla.CALLE,new TituloPropiedad("La Factoría",200, (float) 0.9,320,280, null)));

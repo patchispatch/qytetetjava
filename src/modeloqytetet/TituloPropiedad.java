@@ -31,7 +31,7 @@ public class TituloPropiedad {
         return alquilerBase;
     }
         
-    Casilla getCasilla() {
+    public Casilla getCasilla() {
         return casilla;
     }
     
@@ -47,7 +47,7 @@ public class TituloPropiedad {
         return hipotecada;
     }
     
-    String getNombre() {
+    public String getNombre() {
         return nombre;
     }
     
@@ -58,7 +58,7 @@ public class TituloPropiedad {
     boolean propietarioEncarcelado(){
         throw new UnsupportedOperationException("Sin implementar");
     }
-
+    
     void setCasilla(Casilla casilla) {
         this.casilla = casilla;
     }
