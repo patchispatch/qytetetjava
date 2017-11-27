@@ -2,7 +2,7 @@ package modeloqytetet;
 
 import java.util.ArrayList;
 
-class Jugador {
+public class Jugador {
     private boolean encarcelado=false;
     private String nombre;
     private int saldo=7500;
@@ -19,6 +19,19 @@ class Jugador {
     public String getNombre() {
         return nombre;
     }
+
+    public ArrayList<String> getPropiedades() {
+        ArrayList<String> propied = new ArrayList();
+        for (TituloPropiedad prop: propiedades){
+            propied.add(prop.toString());
+        }
+        return propied;
+    }
+    
+    public ArrayList<TituloPropiedad> obtenerPropiedades() {
+        return propiedades;
+    }
+    
     
     public Casilla getCasillaActual() {
         return casillaActual;
@@ -79,7 +92,9 @@ class Jugador {
     }
     
     Sorpresa devolverCartaLibertad(){
-        throw new UnsupportedOperationException("Sin implementar");
+        Sorpresa carta = cartaLibertad;
+        cartaLibertad = null;
+        return carta;
     }
     
     void irACarcel(Casilla casilla){
@@ -92,7 +107,7 @@ class Jugador {
     }
 
     int obtenerCapital(){
-        int capital = 0;
+        int capital = saldo;
         
         for(TituloPropiedad t : propiedades) {
             int v_prop = 0;
@@ -255,6 +270,11 @@ class Jugador {
         return resultado;
     }
     
-    
+    public boolean bancarrota(){
+        if (saldo <= 0)
+            return true;
+        else
+            return false;
+    }
     
 }

@@ -4,7 +4,6 @@ import java.util.List;
 //import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 import java.util.HashMap;
 
 public class Qytetet {
@@ -150,9 +149,10 @@ public class Qytetet {
                     jugadorActual.modificarSaldo(cantidadRecibida);
                 }
             }
+            return true;
         }
        
-        throw new UnsupportedOperationException("Sin implementar");
+        return false;
     }
     
     public boolean intentarSalirCarcel(MetodoSalirCarcel metodo){
@@ -192,15 +192,10 @@ public class Qytetet {
         return tienePropietario;
     }
     
-    public Map<String, Integer> obtenerRanking(){
-        
-        Map<String, Integer> ranking = new HashMap();
-        
-        for(Jugador jugador : jugadores) {
-            
-            int capital = jugador.obtenerCapital();
-            ranking.put(jugador.getNombre(), capital);
-        }
+    public HashMap<String, Integer> obtenerRanking(){
+        HashMap<String, Integer> ranking = new HashMap();
+        for (Jugador jugador: jugadores)
+            ranking.put(jugador.getNombre(), jugador.obtenerCapital());
         
         return ranking;
     }
@@ -233,7 +228,7 @@ public class Qytetet {
         
         //Ahora, actualizamos la posición con el nuevo jugadorActual;
         n_actual += 1;
-        n_actual %= 4;
+        n_actual %= jugadores.size();
         
         //Actualizamos el nuevo jugadorActual:
         jugadorActual = jugadores.get(n_actual);
@@ -351,6 +346,7 @@ public class Qytetet {
     public void inicializarJuego(ArrayList<String> nombres) {
         this.inicializarJugadores(nombres);
         this.inicializarTablero();
+        this.inicializarJugadores(nombres);
         this.inicializarCartasSorpresa();
         this.salidaJugadores();
         
