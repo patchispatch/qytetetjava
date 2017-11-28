@@ -229,10 +229,15 @@ public class Jugador {
     }
     
     private void eliminarDeMisPropiedades(Casilla casilla){
-        for (TituloPropiedad t : propiedades) {
-            if(t == casilla.getTitulo())
-                propiedades.remove(t);
-        }
+        ArrayList <TituloPropiedad> titulo = new ArrayList();
+        
+        for(int i = 0; i < propiedades.size(); i++)
+            if(propiedades.get(i).getCasilla() != casilla)
+                titulo.add(propiedades.get(i));
+        propiedades.clear();
+        for(int i = 0; i < titulo.size(); i++)
+            propiedades.add(titulo.get(i));
+            
     }
     
     private boolean esDeMiPropiedad(Casilla casilla){

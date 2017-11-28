@@ -65,7 +65,7 @@ public class Tablero {
     private void Inicializar(){
         
         casillas = new ArrayList();
-       
+        
         casillas.add(new Casilla(0,0,TipoCasilla.SALIDA));
         casillas.add(new Casilla(1,500,TipoCasilla.CALLE,new TituloPropiedad("Troupe de los Edena Ruh",150, (float) 0.65,280,250, null)));
         casillas.add(new Casilla(2,200,TipoCasilla.CALLE,new TituloPropiedad("Tarbean",100, (float) 0.75,125,75, null)));

@@ -24,7 +24,7 @@ public class TituloPropiedad {
     }
 
     void cobrarAlquiler (int coste){
-        throw new UnsupportedOperationException("Sin implementar"); 
+        propietario.modificarSaldo(coste);
     }
 
     int getAlquilerBase() {
@@ -56,7 +56,7 @@ public class TituloPropiedad {
     }
     
     boolean propietarioEncarcelado(){
-        throw new UnsupportedOperationException("Sin implementar");
+        return (propietario.getEncarcelado());
     }
     
     void setCasilla(Casilla casilla) {
