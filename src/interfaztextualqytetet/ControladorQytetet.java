@@ -41,7 +41,7 @@ public class ControladorQytetet {
                 vista.mostrar(jugador.toString());
                 int metodo = vista.menuSalirCarcel();
                 if (metodo == 0)
-                juego.intentarSalirCarcel(MetodoSalirCarcel.TIRANDODADO);
+                    juego.intentarSalirCarcel(MetodoSalirCarcel.TIRANDODADO);
                 else
                     juego.intentarSalirCarcel(MetodoSalirCarcel.PAGANDOLIBERTAD);
                 
