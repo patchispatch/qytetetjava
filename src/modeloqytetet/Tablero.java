@@ -32,6 +32,8 @@ public class Tablero {
     }
     
     public Casilla obtenerCasillaNumero (int numeroCasilla){
+        /*
+        
         boolean encontrado = false;
         Casilla devolver = null;
         
@@ -43,6 +45,9 @@ public class Tablero {
                 }
             }
         }
+        */
+        
+        Casilla devolver = casillas.get(numeroCasilla);
         
         return devolver;
     }

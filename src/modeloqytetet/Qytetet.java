@@ -4,7 +4,7 @@ import java.util.List;
 //import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 public class Qytetet {
     //Las constantes en java son "final"
@@ -197,10 +197,24 @@ public class Qytetet {
         return tienePropietario;
     }
     
-    public HashMap<String, Integer> obtenerRanking(){
-        HashMap<String, Integer> ranking = new HashMap();
-        for (Jugador jugador: jugadores)
-            ranking.put(jugador.getNombre(), jugador.obtenerCapital());
+    //Si hay dos jugadore scon el mismo nombre, se machacan.
+    //Array de String "Jugador: capital".
+    public ArrayList<String> obtenerRanking(){
+        
+        ArrayList<String> ranking = new ArrayList();
+        
+         String cadena = "";
+        
+        for (Jugador jugador: jugadores) {
+            
+            cadena += "Nombre del jugador: ";
+            cadena += jugador.getNombre();
+            cadena += ". Capital: ";
+            cadena += String.valueOf(jugador.obtenerCapital());
+            cadena += ".";
+                 
+            ranking.add(cadena);
+        }
         
         return ranking;
     }
@@ -338,14 +352,13 @@ public class Qytetet {
         int i = 0;
         
         while (i < nombres.size()) {
-            Jugador jugador = new Jugador (nombres.get(i));
+            Jugador jugador = new Jugador(nombres.get(i));
             
             jugadores.add(jugador);
             
             i++;
         }
         
-        this.salidaJugadores();
     }
     
     public void inicializarJuego(ArrayList<String> nombres) {

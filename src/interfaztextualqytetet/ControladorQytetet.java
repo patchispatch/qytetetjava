@@ -161,7 +161,7 @@ public class ControladorQytetet {
             }
             else{
                 System.out.println("Fin de la partida. \n");
-                HashMap<String, Integer> lista_ranking = juego.obtenerRanking();
+                ArrayList<String> lista_ranking = juego.obtenerRanking();
                 System.out.println(lista_ranking);
             }
         }while(!jugador.bancarrota());
