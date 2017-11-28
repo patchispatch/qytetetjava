@@ -71,7 +71,12 @@ public class Qytetet {
     }
     
     public boolean cancelarHipoteca(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean hipotecada = false;
+        if (casilla.estaHipotecada()){
+            jugadorActual.modificarSaldo(casilla.cancelarHipoteca());
+            hipotecada = true;
+        }
+        return hipotecada;
     }
     
     public boolean comprarTituloPropiedad(){  

@@ -259,8 +259,8 @@ public class Jugador {
     
     @Override
     public String toString() {
-        String resultado = "Jugador{" + "encarcelado=" + encarcelado + ", nombre=" 
-                + nombre + ", saldo=" + saldo + ", cartaLibertad=" 
+        String resultado = "Jugador{" + " nombre=" + nombre + ", encarcelado=" 
+                + encarcelado +", saldo=" + saldo + ", cartaLibertad=" 
                 + cartaLibertad + ", casillaActual=" + casillaActual 
                 + ", propiedades=";
                 for(TituloPropiedad prop:propiedades){

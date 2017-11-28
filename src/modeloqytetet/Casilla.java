@@ -45,7 +45,10 @@ public class Casilla {
     }
     
     int cancelarHipoteca(){
-        throw new UnsupportedOperationException("Sin implementar");
+        int valor_hipoteca = calcularValorHipoteca();
+        double porcentaje = valor_hipoteca * 0.1;
+        valor_hipoteca = (int)(valor_hipoteca + porcentaje);
+        return valor_hipoteca;
     }
     
     int cobrarAlquiler(){
@@ -75,11 +78,7 @@ public class Casilla {
     int getCoste() {
         return coste;
     }
-    
-    int getCosteHipoteca(){
-        throw new UnsupportedOperationException("Sin implementar");
-    }
-    
+        
     public int getNumeroCasilla() {
         return numeroCasilla;
     }

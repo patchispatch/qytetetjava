@@ -38,7 +38,8 @@ public class ControladorQytetet {
             System.out.println("Pulsa ENTER para seguir");
             lectura = in.nextLine();  //lectura de teclado
             if(jugador.getEncarcelado()){
-               int metodo = vista.menuSalirCarcel();
+                vista.mostrar(jugador.toString());
+                int metodo = vista.menuSalirCarcel();
                 if (metodo == 0)
                 juego.intentarSalirCarcel(MetodoSalirCarcel.TIRANDODADO);
                 else
