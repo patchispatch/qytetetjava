@@ -17,7 +17,9 @@ public class Dado {
     int tirar(){
         int aleatorio;
         aleatorio = (int) (Math.random()*6+1);
-        
+        String cadena = "Valor del dado: ";
+        cadena += aleatorio;
+        System.out.println(cadena);
         return aleatorio;
     }
 }
