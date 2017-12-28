@@ -63,9 +63,16 @@ public class Qytetet {
             
             }
         }
+        
         if(cartaActual.getTipo() == TipoSorpresa.SALIRCARCEL){
             jugadorActual.setCartaLibertad(cartaActual);
             mazo.add(cartaActual);
+        }
+        
+        if(cartaActual.getTipo() == TipoSorpresa.CONVERTIRME) {
+            jugadores.remove(jugadorActual);
+            jugadorActual = jugadorActual.convertirme(cartaActual.getValor());
+            jugadores.add(jugadorActual);
         }
         return tienePropietario;
     }
@@ -90,7 +97,7 @@ public class Qytetet {
     public boolean edificarCasa(Casilla casilla){
         boolean puedoEdificar = false;
         if(casilla.soyEdificable()){
-            boolean sePuedeEdificar = casilla.sePuedeEdificarCasa();
+            boolean sePuedeEdificar = casilla.sePuedeEdificarCasa(jugadorActual.getFactorEspeculador);
             if(sePuedeEdificar){
                 puedoEdificar = jugadorActual.puedoEdificarCasa(casilla);
                 if(puedoEdificar){
@@ -106,7 +113,7 @@ public class Qytetet {
     public boolean edificarHotel(Casilla casilla){
         boolean puedoEdificar = false;
         if(casilla.soyEdificable()){
-            boolean sePuedeEdificar = casilla.sePuedeEdificarHotel();
+            boolean sePuedeEdificar = casilla.sePuedeEdificarHotel(jugadorActual.getFactorEspeculador);
             if(sePuedeEdificar){
                 puedoEdificar = jugadorActual.puedoEdificarHotel(casilla);
                 if(puedoEdificar){
@@ -341,6 +348,17 @@ public class Qytetet {
         mazo.add(new Sorpresa("Aburrido en tu celda, decides ponerte a cantar. "
                 + "A los guardias les ha gustado, ¡y te dejan salir!",
                 TipoSorpresa.SALIRCARCEL, 0));
+        
+        
+        //Convertirse en especulador:
+        
+        mazo.add(new Sorpresa("Te obsequiamos con el caramillo de plata del Eolio. "
+                + "¡Ahora eres un especulador!", TipoSorpresa.CONVERTIRME, 3000));
+        
+        mazo.add(new Sorpresa("Un noble te escuchó tocar anoche, y le encantó tanto "
+                + "que te ha ofrecido su mecenazgo. ¡Ahora eres un especulador!",
+                TipoSorpresa.CONVERTIRME, 5000));
+        
         
         //Barajamos las cartas
         Collections.shuffle(mazo);

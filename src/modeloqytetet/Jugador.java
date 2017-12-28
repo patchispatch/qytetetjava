@@ -3,17 +3,30 @@ package modeloqytetet;
 import java.util.ArrayList;
 
 public class Jugador {
-    private boolean encarcelado=false;
-    private String nombre;
-    private int saldo=7500;
+    protected boolean encarcelado=false;
+    protected String nombre;
+    protected int saldo=7500;
 
-    private Sorpresa cartaLibertad = null;
-    private Casilla casillaActual=null;
-    private ArrayList<TituloPropiedad> propiedades = new ArrayList();
+    protected Sorpresa cartaLibertad = null;
+    protected Casilla casillaActual=null;
+    protected ArrayList<TituloPropiedad> propiedades = new ArrayList();
+    
+    final int factorEspeculador;
     
     //Constructor
-    public Jugador(String nombre){
-        this.nombre = nombre;
+    protected Jugador(String name){
+        nombre = name;
+        factorEspeculador = 1;
+    }
+    
+    protected Jugador(Jugador jugador) {
+        encarcelado = jugador.encarcelado;
+        nombre = jugador.nombre;
+        saldo = jugador.saldo;
+        cartaLibertad = jugador.cartaLibertad;
+        casillaActual = jugador.casillaActual;
+        propiedades = jugador.propiedades;
+        factorEspeculador = jugador.factorEspeculador;
     }
     
     public String getNombre() {
@@ -32,6 +45,9 @@ public class Jugador {
         return propiedades;
     }
     
+    int getFactorEspeculador() {
+        return factorEspeculador;
+    }
     
     public Casilla getCasillaActual() {
         return casillaActual;
@@ -53,7 +69,7 @@ public class Jugador {
         return resultado;
     }
     
-    boolean actualizarPosicion(Casilla casilla){
+    protected boolean actualizarPosicion(Casilla casilla){
         if (casilla.getNumeroCasilla()< casillaActual.getNumeroCasilla()){
             modificarSaldo(Qytetet.getSALDO_SALIDA());
         }
@@ -71,7 +87,7 @@ public class Jugador {
         }
         else if (casilla.getTipo() == TipoCasilla.IMPUESTO){
                 int coste = casilla.getCoste();
-                modificarSaldo(-coste);
+                pagarImpuestos(coste);
         }
                     
         return tienePropietario;        
@@ -136,6 +152,10 @@ public class Jugador {
         }
         
         return resultado;
+    }
+    
+    protected void pagarImpuestos(int cantidad) {
+        modificarSaldo(-cantidad);
     }
     
     void pagarCobrarPorCasaYHotel(int cantidad){
@@ -264,6 +284,8 @@ public class Jugador {
     
     @Override
     public String toString() {
+        
+        //Cambiar "Jugador" por this.getClass().getSimpleName();
         String resultado = "Jugador{" + " nombre=" + nombre + ", encarcelado=" 
                 + encarcelado +", saldo=" + saldo + ", cartaLibertad=" 
                 + cartaLibertad + ", casillaActual=" + casillaActual 
@@ -280,6 +302,12 @@ public class Jugador {
             return true;
         else
             return false;
+    }
+    
+    protected Especulador convertirme(int fianza) {
+        Especulador converso = new Especulador(this, fianza);
+        
+        return converso;
     }
     
 }
