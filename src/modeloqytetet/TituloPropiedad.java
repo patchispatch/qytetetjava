@@ -8,6 +8,7 @@ public class TituloPropiedad {
     private double factorRevalorizacion;
     private int hipotecaBase;
     private int precioEdificar;
+    
     //Atributos de referencia
     public Jugador propietario;
     private Casilla casilla;
@@ -82,11 +83,12 @@ public class TituloPropiedad {
     
     @Override
     public String toString() {
-        return "TituloPropiedad{" + "nombre=" + nombre + ", hipotecada=" 
-                + hipotecada + ", alquilerBase=" + alquilerBase 
-                + ", factorRevalorizacion=" + factorRevalorizacion 
-                + ", hipotecaBase=" + hipotecaBase + ", precioEdificar=" 
-                + precioEdificar + '}';
+        return "Título de propiedad: \n" + "Nombre: " + nombre + 
+               "\n Hipotecada: " + hipotecada + 
+               "\n Alquiler Base: " + alquilerBase + 
+               "\n Factor Revalorizacion: " + factorRevalorizacion + 
+               "\n Hipoteca Base: " + hipotecaBase + 
+               "\n Precio Edificar: " + precioEdificar + "\n";
     }
 
     

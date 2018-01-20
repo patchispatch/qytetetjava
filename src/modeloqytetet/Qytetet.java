@@ -78,12 +78,17 @@ public class Qytetet {
     }
     
     public boolean cancelarHipoteca(Casilla casilla){
-        boolean hipotecada = false;
-        if (casilla.estaHipotecada()){
-            jugadorActual.modificarSaldo(casilla.cancelarHipoteca());
-            hipotecada = true;
+        boolean puedoDeshipotecar = false;
+        
+        if (((Calle)casilla).estaHipotecada()){
+            if(jugadorActual.puedoPagarHipoteca((Calle)casilla)) {
+                jugadorActual.modificarSaldo(-((Calle)casilla).cancelarHipoteca());
+            }
+            
+            puedoDeshipotecar = true;
         }
-        return hipotecada;
+        
+        return puedoDeshipotecar;
     }
     
     public boolean comprarTituloPropiedad(){  
@@ -95,34 +100,47 @@ public class Qytetet {
     }
     
     public boolean edificarCasa(Casilla casilla){
+        
         boolean puedoEdificar = false;
+        
         if(casilla.soyEdificable()){
-            boolean sePuedeEdificar = casilla.sePuedeEdificarCasa(jugadorActual.getFactorEspeculador);
+            
+            boolean sePuedeEdificar = ((Calle)casilla).sePuedeEdificarCasa(jugadorActual.getFactorEspeculador());
+            
             if(sePuedeEdificar){
-                puedoEdificar = jugadorActual.puedoEdificarCasa(casilla);
+                puedoEdificar = jugadorActual.puedoEdificarCasa((Calle)casilla);
+                        
                 if(puedoEdificar){
-                    int costeEdificarCasa = casilla.edificarCasa();
+                    
+                    int costeEdificarCasa = ((Calle)casilla).edificarCasa();
                     jugadorActual.modificarSaldo(-costeEdificarCasa);
                 }
             }
             
         }
+        
         return puedoEdificar;
     }
     
     public boolean edificarHotel(Casilla casilla){
+        
         boolean puedoEdificar = false;
+        
         if(casilla.soyEdificable()){
-            boolean sePuedeEdificar = casilla.sePuedeEdificarHotel(jugadorActual.getFactorEspeculador);
+            
+            boolean sePuedeEdificar = ((Calle)casilla).sePuedeEdificarHotel(jugadorActual.getFactorEspeculador());
+            
             if(sePuedeEdificar){
-                puedoEdificar = jugadorActual.puedoEdificarHotel(casilla);
+                puedoEdificar = jugadorActual.puedoEdificarHotel((Calle)casilla);
+                
                 if(puedoEdificar){
-                    int costeEdificarHotel = casilla.edificarHotel();
+                    int costeEdificarHotel = ((Calle)casilla).edificarHotel();
                     jugadorActual.modificarSaldo(-costeEdificarHotel);
                 }
             }
             
         }
+        
         return puedoEdificar;
     }
     
@@ -152,12 +170,16 @@ public class Qytetet {
     }
     
     public boolean hipotecarPropiedad(Casilla casilla){
+        
         if(casilla.soyEdificable()){
-            boolean sePuedeHipotecar = !casilla.estaHipotecada();
+            
+            boolean sePuedeHipotecar = !((Calle)casilla).estaHipotecada();
+            
             if(sePuedeHipotecar){
-                boolean puedoHipotecar = jugadorActual.puedoHipotecar(casilla);
+                boolean puedoHipotecar = jugadorActual.puedoHipotecar((Calle)casilla);
+                
                 if(puedoHipotecar){
-                    int cantidadRecibida = casilla.hipotecar();
+                    int cantidadRecibida = ((Calle)casilla).hipotecar();
                     jugadorActual.modificarSaldo(cantidadRecibida);
                 }
             }
@@ -188,16 +210,21 @@ public class Qytetet {
     }
     
     public boolean jugar(){
+        
         int valorDado = dado.tirar();
         Casilla casillaPosicion = jugadorActual.getCasillaActual();
         Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, valorDado);
         boolean tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);
     
         if(!nuevaCasilla.soyEdificable()){
-            if(nuevaCasilla.getTipo()==TipoCasilla.JUEZ){
+            
+            OtraCasilla casilla = (OtraCasilla) nuevaCasilla;
+            
+            if(casilla.getTipo()==TipoCasilla.JUEZ){
                 encarcelarJugador();
             }
-            else if(nuevaCasilla.getTipo()==TipoCasilla.SORPRESA){
+            
+            else if(casilla.getTipo()==TipoCasilla.SORPRESA){
                 cartaActual = mazo.get(0);
             }
         }
@@ -380,9 +407,9 @@ public class Qytetet {
     }
     
     public void inicializarJuego(ArrayList<String> nombres) {
+        
         this.inicializarJugadores(nombres);
         this.inicializarTablero();
-        this.inicializarJugadores(nombres);
         this.inicializarCartasSorpresa();
         this.salidaJugadores();
         
@@ -397,6 +424,7 @@ public class Qytetet {
         for (Jugador j : jugadores) {
             j.setCasillaActual(tablero.obtenerCasillaNumero(0));
         }
+        
         int aleatorio;
         aleatorio = (int) (Math.random()*jugadores.size());
         

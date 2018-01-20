@@ -5,27 +5,12 @@ package modeloqytetet;
     
         protected int numeroCasilla;
         protected int coste;
+        protected TipoCasilla tipo;
     
-
-    /*
-    public Casilla(int numeroCasilla, int coste, TipoCasilla tipo) {
-        this.numeroCasilla = numeroCasilla;
-        this.coste = coste;
-        this.tipo = tipo;
-    }
-
-    public Casilla(int numeroCasilla, int coste, TipoCasilla tipo, TituloPropiedad titulo) {
-        this.numeroCasilla = numeroCasilla;
-        this.coste = coste;
-        this.tipo = tipo;
-        this.asignarTituloPropiedad(titulo);
-        
-    }
-    */
-    
-    public Casilla(int numero, int cost) {
+    public Casilla(int numero, int cost, TipoCasilla type) {
         numeroCasilla = numero;
         coste = cost;
+        tipo = type;
     }
 
     public int getCoste() {
@@ -34,6 +19,10 @@ package modeloqytetet;
     
     public int getNumeroCasilla() {
         return numeroCasilla;
+    }
+    
+    public TipoCasilla getTipo() {
+        return tipo;
     }
     
     abstract boolean soyEdificable();

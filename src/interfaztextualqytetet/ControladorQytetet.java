@@ -22,6 +22,7 @@ public class ControladorQytetet {
     }
     
     public void inicializacionJuego(){
+        
         juego = Qytetet.getInstance();
         ArrayList<String> nombres = vista.obtenerNombreJugadores();
         juego.inicializarJuego(nombres);
@@ -33,19 +34,27 @@ public class ControladorQytetet {
     }
     
     public void desarrolloJuego(){
+        
         String lectura;
+        
         do{
             System.out.println("Pulsa ENTER para seguir");
             lectura = in.nextLine();  //lectura de teclado
+            
             if(jugador.getEncarcelado()){
+                
                 vista.mostrar(jugador.toString());
+                
                 int metodo = vista.menuSalirCarcel();
+                
                 if (metodo == 0)
                     juego.intentarSalirCarcel(MetodoSalirCarcel.TIRANDODADO);
+                
                 else
                     juego.intentarSalirCarcel(MetodoSalirCarcel.PAGANDOLIBERTAD);
                 
             }
+            
             if(!jugador.getEncarcelado()){
                 System.out.println("Jugando.");
                 boolean noTienePropietario = juego.jugar();
@@ -60,19 +69,24 @@ public class ControladorQytetet {
                     if(!jugador.getEncarcelado()){
                         System.out.println("No está encarcelado. \n");
                         System.out.println(casilla.getTipo());
+                        
                         if(casilla.getTipo() == TipoCasilla.CALLE){
                             System.out.println("Es una calle. \n");
                             boolean opcion = vista.elegirQuieroComprar();
                             
                             if(opcion){
+                                
                                 boolean comprado = juego.comprarTituloPropiedad();
+                                
                                 if (comprado)
                                     System.out.println("Comprado.\n");
                                 else
                                     System.out.println("No se ha podido comprar la propiedad.\n");
                             }
                         }
+                        
                         else if(casilla.getTipo() == TipoCasilla.SORPRESA){
+                            
                             System.out.println("Es una sorpresa. \n");
                             noTienePropietario = juego.aplicarSorpresa();
                             vista.mostrar(jugador.toString());
@@ -81,6 +95,7 @@ public class ControladorQytetet {
                                     && casilla.getTipo() == TipoCasilla.CALLE &&
                                     noTienePropietario){
                                 boolean opcion = vista.elegirQuieroComprar();
+                                
                                 if(opcion){
                                     juego.comprarTituloPropiedad();
                                     vista.mostrar(jugador.toString());
@@ -91,16 +106,24 @@ public class ControladorQytetet {
                         if(!jugador.getEncarcelado() && !jugador.bancarrota() && 
                                 jugador.tengoPropiedades()){
                             int opcion;
+                            
                             do{
                                 opcion = vista.menuGestionInmobiliaria();
                                 
                                 if(opcion!=0){
+                                    
                                     vista.mostrar(jugador.toString());
                                     System.out.println("Elige la propiedad: \n");
-                                    ArrayList<TituloPropiedad> propiedades = jugador.obtenerPropiedades();
-                                    int secCasilla = vista.menuElegirPropiedad(jugador.getPropiedades());
-                                    Casilla casillaElegida = propiedades.get(secCasilla).getCasilla();
+                                    
+                                    ArrayList<Casilla> casillas = new ArrayList();
+                                    
+                                    for(TituloPropiedad t : jugador.obtenerPropiedades()) {
+                                        casillas.add(t.getCasilla());
+                                    }
+                                    
+                                    Casilla casillaElegida = elegirPropiedad(casillas);
                                     boolean res;
+                                    
                                     switch(opcion){
                                         case 1:
                                                res = juego.edificarCasa(casillaElegida);
@@ -166,18 +189,23 @@ public class ControladorQytetet {
             }
         }while(!jugador.bancarrota());
     }
+    
     public Casilla elegirPropiedad(ArrayList<Casilla> propiedades){ 
-// este metodo toma una lista de propiedades y genera una lista de strings, con el numero y nombre de las propiedades
-// luego llama a la vista para que el usuario pueda elegir.
+    // este metodo toma una lista de propiedades y genera una lista de strings, con el numero y nombre de las propiedades
+    // luego llama a la vista para que el usuario pueda elegir.
         vista.mostrar("\tCasilla\tTitulo");
         int seleccion;
         ArrayList<String> listaPropiedades= new ArrayList();
-        for ( Casilla casilla: propiedades) {
-                listaPropiedades.add( "\t"+casilla.getNumeroCasilla()+"\t"+casilla.getTitulo().getNombre()); 
+        
+        for (Casilla cas : propiedades) {
+            listaPropiedades.add("\t" + cas.getNumeroCasilla() + "\t" + ((Calle)cas).getTitulo().getNombre());
         }
+        
         seleccion=vista.menuElegirPropiedad(listaPropiedades);  
+        
         return propiedades.get(seleccion);
     }
+    
     public static void main(String[] args) {
         ControladorQytetet controlador = new ControladorQytetet();
         controlador.inicializacionJuego();

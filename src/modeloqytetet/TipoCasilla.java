@@ -1,5 +1,5 @@
 package modeloqytetet;
 
 public enum TipoCasilla {
-    SALIDA,SORPRESA,CARCEL,JUEZ,IMPUESTO,PARKING    
+    SALIDA,SORPRESA,CARCEL,JUEZ,IMPUESTO,PARKING,CALLE    
 }

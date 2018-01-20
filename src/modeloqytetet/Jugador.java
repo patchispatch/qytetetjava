@@ -11,12 +11,11 @@ public class Jugador {
     protected Casilla casillaActual=null;
     protected ArrayList<TituloPropiedad> propiedades = new ArrayList();
     
-    final int factorEspeculador;
+    final int factorEspeculador = 1;
     
     //Constructor
     protected Jugador(String name){
         nombre = name;
-        factorEspeculador = 1;
     }
     
     protected Jugador(Jugador jugador) {
@@ -26,7 +25,6 @@ public class Jugador {
         cartaLibertad = jugador.cartaLibertad;
         casillaActual = jugador.casillaActual;
         propiedades = jugador.propiedades;
-        factorEspeculador = jugador.factorEspeculador;
     }
     
     public String getNombre() {
@@ -70,21 +68,28 @@ public class Jugador {
     }
     
     protected boolean actualizarPosicion(Casilla casilla){
+        
         if (casilla.getNumeroCasilla()< casillaActual.getNumeroCasilla()){
             modificarSaldo(Qytetet.getSALDO_SALIDA());
         }
+        
         boolean tienePropietario = false;
         setCasillaActual(casilla);
+        
         if (casilla.soyEdificable()){
-            if (casilla.tengoPropietario()){
+            
+            if (((Calle)casilla).tengoPropietario()){
+                
                 tienePropietario =  true;
+                
                 if(!encarcelado){
-                    int costeAlquiler = casilla.cobrarAlquiler();
+                    int costeAlquiler = ((Calle)casilla).cobrarAlquiler();
                     modificarSaldo(-costeAlquiler);
                 }
             
             }
         }
+        
         else if (casilla.getTipo() == TipoCasilla.IMPUESTO){
                 int coste = casilla.getCoste();
                 pagarImpuestos(coste);
@@ -96,10 +101,10 @@ public class Jugador {
     boolean comprarTitulo(){
  
         boolean puedoComprar = false;
-        if(casillaActual.soyEdificable() && !casillaActual.tengoPropietario()
+        if(casillaActual.soyEdificable() && !((Calle)casillaActual).tengoPropietario()
                 && (casillaActual.getCoste() <= saldo)){
             int costeCompra = casillaActual.getCoste();
-            TituloPropiedad titulo = casillaActual.asignarPropietario(this);
+            TituloPropiedad titulo = ((Calle)casillaActual).asignarPropietario(this);
             propiedades.add(titulo);
             modificarSaldo(-costeCompra);
             puedoComprar=true;
@@ -173,19 +178,26 @@ public class Jugador {
     }
     
     boolean puedoEdificarCasa(Casilla casilla){
+        
         boolean esMia = esDeMiPropiedad(casilla);
+        boolean tengoSaldo = false;
+        boolean puedoEdificar = false;
+        
         if(esMia){
-            int costeEdificarCasa = casilla.getPrecioEdificar();
-            boolean tengoSaldo = tengoSaldo(costeEdificarCasa);
-            return tengoSaldo;
+            int costeEdificarCasa = ((Calle)casilla).getPrecioEdificar();
+            tengoSaldo = tengoSaldo(costeEdificarCasa);
         }
-        return esMia;
+        
+        if(esMia && tengoSaldo)
+            puedoEdificar = true;
+        
+        return puedoEdificar;
     }
     
     boolean puedoEdificarHotel(Casilla casilla){
         boolean esMia = esDeMiPropiedad(casilla);
         if(esMia){
-            int costeEdificarHotel = casilla.getPrecioEdificar();
+            int costeEdificarHotel = ((Calle)casilla).getPrecioEdificar();
             boolean tengoSaldo = tengoSaldo(costeEdificarHotel);
             return tengoSaldo;
         }
@@ -196,14 +208,21 @@ public class Jugador {
         return esMia;
     }
     boolean puedoPagarHipoteca(Casilla casilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean puedoPagar = false;
+        
+        if(saldo >= ((Calle)casilla).getCosteHipoteca()) {
+            puedoPagar = true;
+        }
+        
+        return puedoPagar;
     }
     
     boolean puedoVenderPropiedad(Casilla casilla){
         boolean resultado = false;
         
         if(this.esDeMiPropiedad(casilla)) {
-            if(!casilla.estaHipotecada())
+            if(!((Calle)casilla).estaHipotecada())
                 resultado = true;
         }
         
@@ -233,7 +252,7 @@ public class Jugador {
     }
     
     void venderPropiedad(Casilla casilla){
-        int precioVenta = casilla.venderTitulo();
+        int precioVenta = ((Calle)casilla).venderTitulo();
         modificarSaldo(precioVenta);
         eliminarDeMisPropiedades(casilla);
     }
@@ -242,7 +261,7 @@ public class Jugador {
         int prop = 0;
         
         for(TituloPropiedad t : propiedades) {
-            prop += t.getCasilla().getNumCasas() + t.getCasilla().getNumHoteles();
+            prop += (((Calle)t.getCasilla()).getNumCasas() + ((Calle)t.getCasilla()).getNumHoteles());
         }
         
         return prop;
@@ -264,7 +283,7 @@ public class Jugador {
         boolean resultado = false;
         
         for(TituloPropiedad t : propiedades){
-            if(t == casilla.getTitulo())
+            if(t == ((Calle)casilla).getTitulo())
                 resultado = true;
         }
         
@@ -286,14 +305,20 @@ public class Jugador {
     public String toString() {
         
         //Cambiar "Jugador" por this.getClass().getSimpleName();
-        String resultado = "Jugador{" + " nombre=" + nombre + ", encarcelado=" 
-                + encarcelado +", saldo=" + saldo + ", cartaLibertad=" 
-                + cartaLibertad + ", casillaActual=" + casillaActual 
-                + ", propiedades=";
+        String resultado = "Jugador:" + 
+                "\n Nombre: " + nombre + 
+                "\n Encarcelado:" + encarcelado +
+                "\n Saldo=" + saldo + 
+                "\n Carta Libertad: " + cartaLibertad + 
+                "\n Casilla Actual: " + casillaActual + 
+                "\n Propiedades: ";
+
                 for(TituloPropiedad prop:propiedades){
                     resultado += prop.toString() + "\n"; 
                 }
-                 resultado += '}';
+                
+                resultado += "\n";
+                 
         return resultado;
     }
     

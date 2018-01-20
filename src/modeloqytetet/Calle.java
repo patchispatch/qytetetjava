@@ -7,8 +7,9 @@ public class Calle extends Casilla {
     private int numHoteles = 0;
     
     public Calle(int numeroCasilla, int coste, TituloPropiedad title) {
-        super(numeroCasilla, coste);
+        super(numeroCasilla, coste, TipoCasilla.CALLE);
         titulo = title;
+        titulo.setCasilla(this);
     }
     
     public TituloPropiedad getTitulo() {
@@ -56,10 +57,6 @@ public class Calle extends Casilla {
     boolean estaHipotecada(){
         return titulo.getHipotecada();
     }
-    
-    public int getNumeroCasilla() {
-        return numeroCasilla;
-    }
   
     int getNumCasas() {
         return numCasas;
@@ -90,7 +87,8 @@ public class Calle extends Casilla {
     }
     
     boolean sePuedeEdificarCasa(int factorEspeculador){
-        if(numCasas < 4 * factorEspeculador)
+        
+        if(numCasas < (4 * factorEspeculador))
             return true;
         else
             return false;
@@ -147,5 +145,12 @@ public class Calle extends Casilla {
     @Override 
     boolean soyEdificable() {
         return true;
+    }
+    
+    int getCosteHipoteca() {
+        
+        int cost = (int)(calcularValorHipoteca() * 1.10);
+        
+        return cost;
     }
 }
