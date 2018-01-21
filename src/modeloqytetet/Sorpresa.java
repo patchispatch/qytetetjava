@@ -29,8 +29,10 @@ public class Sorpresa {
     //toString():
     @Override
     public String toString() {
-        return "Sorpresa{" + "texto=" + texto + ", tipo=" + tipo + ", valor=" + 
-                valor + '}';
+        return "Sorpresa: \n" + 
+               "Texto:" + texto + 
+               "\n Tipo:" + tipo + 
+               "\n Valor: " + valor + "\n";
     }
     
     

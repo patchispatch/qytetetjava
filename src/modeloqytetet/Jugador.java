@@ -3,6 +3,7 @@ package modeloqytetet;
 import java.util.ArrayList;
 
 public class Jugador {
+    
     protected boolean encarcelado=false;
     protected String nombre;
     protected int saldo=7500;

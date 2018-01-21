@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 //import java.util.HashMap;
+import GUIQytetet.Dado;
 
 public class Qytetet {
     //Las constantes en java son "final"
@@ -28,7 +29,6 @@ public class Qytetet {
     private Jugador jugadorActual = null;
     private ArrayList<Jugador> jugadores;
     private Tablero tablero;
-    private Dado dado = Dado.getInstance();
     private ArrayList<Sorpresa> mazo;
     
     
@@ -156,10 +156,6 @@ public class Qytetet {
         return tablero;
     }
 
-    public Dado getDado() {
-        return dado;
-    }
-
     public ArrayList<Sorpresa> getMazo() {
         return mazo;
     }
@@ -193,7 +189,8 @@ public class Qytetet {
         boolean libre = false;
        
        if (metodo == MetodoSalirCarcel.TIRANDODADO){
-           int valor = dado.tirar();
+           Dado dado = GUIQytetet.Dado.getInstance();
+           int valor = dado.nextNumber();
            if (valor > 5){
                libre = true;
            }
@@ -211,7 +208,8 @@ public class Qytetet {
     
     public boolean jugar(){
         
-        int valorDado = dado.tirar();
+        Dado dado = GUIQytetet.Dado.getInstance();
+        int valorDado = dado.nextNumber();
         Casilla casillaPosicion = jugadorActual.getCasillaActual();
         Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, valorDado);
         boolean tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);

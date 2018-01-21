@@ -77,7 +77,7 @@ public class PruebaQytetet {
         
         */
         
-        
+        /*
         Qytetet qytetet = Qytetet.getInstance();
         
         //Jugadores (provisional):
@@ -102,6 +102,6 @@ public class PruebaQytetet {
         
         //Mostramos qytetet:
         System.out.println(qytetet.toString());
-        
+        */
     }
 }
